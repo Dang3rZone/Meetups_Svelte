@@ -9,7 +9,8 @@
 
   let createdContacts = [];
 
-  function addContact() {
+  function addContact(e) {
+    e.preventDefault();
     if (
       name.trim().length == 0 ||
       title.trim().length == 0 ||
@@ -59,9 +60,10 @@
     <label for="desc">Description</label>
     <textarea rows="3" bind:value={description} id="desc" />
   </div>
+  <button on:click|once={addContact}>Add Contact</button>
 </div>
 
-<button on:click={addContact}>Add Contact</button>
+<!-- TODO: Modifiers are pipes with | sintax: once, passive, capture, stopPropagation, preventDefault -->
 <button on:click={deleteFirst}>Delete First Contact</button>
 <button on:click={deleteLast}>Delete Last Contact</button>
 
@@ -87,5 +89,6 @@
   #form {
     width: 25rem;
     max-width: 100%;
+    margin: 1rem;
   }
 </style>
