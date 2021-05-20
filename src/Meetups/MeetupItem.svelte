@@ -45,7 +45,7 @@
   .image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: scale-down;
   }
 
   h1 {
@@ -74,5 +74,8 @@
 
   div {
     text-align: right;
+  }
+  .content {
+    height: 4rem;
   }
 </style>
