@@ -1,10 +1,10 @@
 <script>
   import EditMeetup from "./Meetups/EditMeetup.svelte";
-
   import MeetupGrid from "./Meetups/MeetupGrid.svelte";
   import Button from "./UI/Button.svelte";
   import Header from "./UI/Header.svelte";
 
+  let editMode;
   let meetups = [
     {
       id: "m1",
@@ -30,19 +30,18 @@
     },
   ];
 
-  let editMode = null;
-
-  function addMeetup() {
+  function addMeetup(e) {
     const newMeetup = {
       id: Math.random().toString(),
-      title: title,
-      subtitle: subtitle,
-      description: description,
-      imageUrl: imageUrl,
-      email: email,
-      address: address,
+      title: e.detail.title,
+      subtitle: e.detail.subtitle,
+      description: e.detail.description,
+      imageUrl: e.detail.imageUrl,
+      email: e.detail.email,
+      address: e.detail.address,
     };
     meetups = [newMeetup, ...meetups];
+    editMode = null;
   }
 
   function togglefavorite(e) {
@@ -62,9 +61,11 @@
 
 <Header />
 <main>
-  <Button caption="New meetup" on:click={() => (editMode = "add")} />
+  <div class="controls">
+    <Button caption="New meetup" on:click={() => (editMode = "add")} />
+  </div>
   {#if editMode === "add"}
-    <EditMeetup />
+    <EditMeetup on:save={addMeetup} />
   {/if}
   <MeetupGrid {meetups} on:togglefavorite={togglefavorite} />
 </main>
@@ -72,5 +73,8 @@
 <style>
   main {
     margin-top: 5rem;
+  }
+  .controls {
+    margin: 1rem;
   }
 </style>
