@@ -1,15 +1,9 @@
 <script>
+  import EditMeetup from "./Meetups/EditMeetup.svelte";
+
   import MeetupGrid from "./Meetups/MeetupGrid.svelte";
   import Button from "./UI/Button.svelte";
   import Header from "./UI/Header.svelte";
-  import TextInput from "./UI/TextInput.svelte";
-
-  let title = "";
-  let subtitle = "";
-  let address = "";
-  let email = "";
-  let description = "";
-  let imageUrl = "";
 
   let meetups = [
     {
@@ -35,6 +29,8 @@
       isFavorite: false,
     },
   ];
+
+  let editMode = null;
 
   function addMeetup() {
     const newMeetup = {
@@ -66,62 +62,15 @@
 
 <Header />
 <main>
-  <form on:submit|preventDefault={addMeetup}>
-    <TextInput
-      id="title"
-      type="text"
-      label="Title"
-      value={title}
-      on:input={(e) => (title = e.target.value)}
-    />
-    <TextInput
-      id="subtitle"
-      type="text"
-      label="Subtitle"
-      value={subtitle}
-      on:input={(e) => (subtitle = e.target.value)}
-    />
-    <TextInput
-      id="address"
-      type="text"
-      label="Address"
-      value={address}
-      on:input={(e) => (address = e.target.value)}
-    />
-    <TextInput
-      id="imageUrl"
-      type="text"
-      label="Image Url"
-      value={imageUrl}
-      on:input={(e) => (imageUrl = e.target.value)}
-    />
-    <TextInput
-      id="email"
-      label="Email"
-      value={email}
-      type="email"
-      on:input={(e) => (email = e.target.value)}
-    />
-    <TextInput
-      id="description"
-      label="Description"
-      value={description}
-      controlType="textarea"
-      on:input={(e) => (description = e.target.value)}
-    />
-
-    <Button type="submit" caption="Save" />
-  </form>
+  <Button caption="New meetup" on:click={() => (editMode = "add")} />
+  {#if editMode === "add"}
+    <EditMeetup />
+  {/if}
   <MeetupGrid {meetups} on:togglefavorite={togglefavorite} />
 </main>
 
 <style>
   main {
     margin-top: 5rem;
-  }
-  form {
-    width: 30rem;
-    max-width: 90%;
-    margin: auto;
   }
 </style>
