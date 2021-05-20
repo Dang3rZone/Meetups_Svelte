@@ -21,6 +21,7 @@
         "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/1200px-Svelte_Logo.svg.png",
       address: "WeWork - Paseo Castellana 77, Madrid",
       contactEmail: "tao@test.com",
+      isFavorite: false,
     },
     {
       id: "m2",
@@ -31,6 +32,7 @@
         "https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg",
       address: "WeWork - Paseo Castellana 77, Madrid",
       contactEmail: "tao@test.com",
+      isFavorite: false,
     },
   ];
 
@@ -45,6 +47,20 @@
       address: address,
     };
     meetups = [newMeetup, ...meetups];
+  }
+
+  function togglefavorite(e) {
+    const id = e.detail;
+    // Copy the meetup before update
+    const updatedMeetup = { ...meetups.find((meet) => meet.id === id) };
+    updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
+    const meetupIndex = meetups.findIndex((meet) => meet.id === id);
+    // Copy the entire meetups
+    const updatedMeetups = [...meetups];
+    // Update the copy to array by replacing an element
+    updatedMeetups[meetupIndex] = updatedMeetup;
+    // Overwrite the existing meetups array so it triggers the DOM update
+    meetups = updatedMeetups;
   }
 </script>
 
@@ -96,7 +112,7 @@
 
     <Button type="submit" caption="Save" />
   </form>
-  <MeetupGrid {meetups} />
+  <MeetupGrid {meetups} on:togglefavorite={togglefavorite} />
 </main>
 
 <style>

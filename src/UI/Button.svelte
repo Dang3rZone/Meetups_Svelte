@@ -1,5 +1,5 @@
 <script>
-  export let type,
+  export let type = "button",
     caption,
     href = null,
     mode = null;
@@ -8,7 +8,7 @@
 {#if href}
   <a {href}>{caption}</a>
 {:else}
-  <button class={mode} {type}>{caption}</button>
+  <button class={mode} {type} on:click>{caption}</button>
 {/if}
 
 <style>
