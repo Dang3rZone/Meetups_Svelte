@@ -1,44 +1,50 @@
 <script>
   import ContactCard from "./ContactCard.svelte";
-  let userName = "andres";
-  let jobTitle = "Front-End";
-  let description = "Study Svelte";
+
+  let name = "Max";
+  let title = "";
   let image = "";
+  let description = "";
+  let done = false;
+
+  function addContact() {
+    done = true;
+  }
 </script>
 
-<main>
-  <h1>Hello {userName}!</h1>
-  <button>Change</button>
-  <input type="text" bind:value={userName} />
-  <input type="text" bind:value={jobTitle} />
-  <input type="text" bind:value={image} />
-  <textarea rows="3" bind:value={description} />
+<div id="form">
+  <div class="form-control">
+    <label for="userName">User Name</label>
+    <input type="text" bind:value={name} id="userName" />
+  </div>
+  <div class="form-control">
+    <label for="jobTitle">Job Title</label>
+    <input type="text" bind:value={title} id="jobTitle" />
+  </div>
+  <div class="form-control">
+    <label for="image">Image URL</label>
+    <input type="text" bind:value={image} id="image" />
+  </div>
+  <div class="form-control">
+    <label for="desc">Description</label>
+    <textarea rows="3" bind:value={description} id="desc" />
+  </div>
+</div>
+
+<button on:click={addContact}>Add Contact</button>
+
+{#if done}
   <ContactCard
-    userName={userName.toUpperCase()}
-    {jobTitle}
+    userName={name}
+    jobTitle={title}
     {description}
-    {image}
+    userImage={image}
   />
-</main>
+{/if}
 
 <style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
+  #form {
+    width: 25rem;
+    max-width: 100%;
   }
 </style>
