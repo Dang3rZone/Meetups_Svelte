@@ -1,5 +1,5 @@
 <script>
-  export let title, subtitle, imageUrl, description;
+  export let title, subtitle, imageUrl, description, email, address;
 </script>
 
 <article>
@@ -12,8 +12,10 @@
   </div>
   <div class="content">
     <p>{description}</p>
+    <p>{address}</p>
   </div>
   <footer>
+    <a href="mailto:{email}">Contact</a>
     <button>Show Details</button>
     <button>Favorite</button>
   </footer>
