@@ -57,15 +57,19 @@
     // Overwrite the existing meetups array so it triggers the DOM update
     meetups = updatedMeetups;
   }
+
+  function cancelEdit() {
+    editMode = null;
+  }
 </script>
 
 <Header />
 <main>
   <div class="controls">
-    <Button caption="New meetup" on:click={() => (editMode = "add")} />
+    <Button on:click={() => (editMode = "add")}>New meetup</Button>
   </div>
   {#if editMode === "add"}
-    <EditMeetup on:save={addMeetup} />
+    <EditMeetup on:save={addMeetup} on:cancel={cancelEdit} />
   {/if}
   <MeetupGrid {meetups} on:togglefavorite={togglefavorite} />
 </main>

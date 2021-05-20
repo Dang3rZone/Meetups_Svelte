@@ -26,15 +26,15 @@
     <p>{address}</p>
   </div>
   <footer>
-    <Button href="mailto:{email}" type="button" caption="Contact" />
-    <Button mode="outline" type="button" caption="Show Details" />
+    <Button href="mailto:{email}" type="button">Contact</Button>
+    <Button mode="outline" type="button">More Details</Button>
     <Button
       mode="outline"
       color={isFav ? null : "success"}
       type="button"
-      caption={isFav ? "Unfavorite" : "Favorite"}
       on:click={() => dispatch("togglefavorite", id)}
-    />
+      >{isFav ? "Unfavorite" : "Favorite"}</Button
+    >
   </footer>
 </article>
 
