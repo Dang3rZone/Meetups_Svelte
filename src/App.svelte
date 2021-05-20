@@ -1,94 +1,45 @@
 <script>
-  import ContactCard from "./ContactCard.svelte";
+  import MeetupItem from "./Meetups/MeetupItem.svelte";
+  import Header from "./UI/Header.svelte";
 
-  let name = "Andres";
-  let title = "";
-  let image = "";
-  let description = "";
-  let formState = "empty";
-
-  let createdContacts = [];
-
-  function addContact(e) {
-    e.preventDefault();
-    if (
-      name.trim().length == 0 ||
-      title.trim().length == 0 ||
-      image.trim().length == 0 ||
-      description.trim().length == 0
-    ) {
-      formState = "invalid";
-      return;
-    }
-
-    createdContacts = [
-      ...createdContacts,
-      {
-        id: Math.random() * 10000,
-        name: name,
-        jobTitle: title,
-        imageUrl: image,
-        desc: description,
-      },
-    ];
-
-    formState = "done";
-  }
-
-  function deleteFirst() {
-    createdContacts = createdContacts.slice(1);
-  }
-  function deleteLast() {
-    createdContacts = createdContacts.slice(0, -1);
-  }
+  const meetups = [
+    {
+      id: "m1",
+      title: "Learning Svelte",
+      subtitle: "TAO FE position",
+      description: "Onboarding process",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/1200px-Svelte_Logo.svg.png",
+      address: "WeWork - Paseo Castellana 77, Madrid",
+      contactEmail: "tao@taotesting.com",
+    },
+    {
+      id: "m2",
+      title: "Learning PHP",
+      subtitle: "TAO BE position",
+      description: "Onboarding process",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg",
+      address: "WeWork - Paseo Castellana 77, Madrid",
+      contactEmail: "tao@taotesting.com",
+    },
+  ];
 </script>
 
-<div id="form">
-  <div class="form-control">
-    <label for="userName">User Name</label>
-    <input type="text" bind:value={name} id="userName" />
-  </div>
-  <div class="form-control">
-    <label for="jobTitle">Job Title</label>
-    <input type="text" bind:value={title} id="jobTitle" />
-  </div>
-  <div class="form-control">
-    <label for="image">Image URL</label>
-    <input type="text" bind:value={image} id="image" />
-  </div>
-  <div class="form-control">
-    <label for="desc">Description</label>
-    <textarea rows="3" bind:value={description} id="desc" />
-  </div>
-  <button on:click|once={addContact}>Add Contact</button>
-</div>
-
-<!-- TODO: Modifiers are pipes with | sintax: once, passive, capture, stopPropagation, preventDefault -->
-<button on:click={deleteFirst}>Delete First Contact</button>
-<button on:click={deleteLast}>Delete Last Contact</button>
-
-{#if formState === "invalid"}
-  <p>Invalid form! Please complete the form</p>
-  <!-- {:else}
-  <p>Please enter some data</p> -->
-{/if}
-
-{#each createdContacts as contact, index (contact.id)}
-  <h2>#{index + 1}</h2>
-  <ContactCard
-    userName={contact.name}
-    jobTitle={contact.jobTitle}
-    description={contact.desc}
-    userImage={contact.imageUrl}
-  />
-{:else}
-  <p>Please start adding contacts!</p>
-{/each}
+<Header />
+<section id="meetups">
+  {#each meetups as meetup}
+    <MeetupItem
+      title={meetup.title}
+      subtitle={meetup.subtitle}
+      imageUrl={meetup.imageUrl}
+      description={meetup.description}
+    />
+  {/each}
+</section>
 
 <style>
-  #form {
-    width: 25rem;
-    max-width: 100%;
-    margin: 1rem;
+  #meetups {
+    margin-top: 5em;
   }
 </style>
