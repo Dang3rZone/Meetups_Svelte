@@ -4,7 +4,11 @@
     label,
     rows = null,
     value,
-    type = null;
+    type = null,
+    valid = true,
+    validityMessage = "";
+
+  let touched = false;
 </script>
 
 <div class="form-control">
@@ -12,9 +16,26 @@
 
   {#if controlType === "textarea"}
     <!-- Use on: without handler to pass it to the parent -->
-    <textarea row={rows} {id} {value} on:input />
+    <textarea
+      class:invalid={!valid && touched}
+      row={rows}
+      {id}
+      {value}
+      on:input
+      on:blur={() => (touched = true)}
+    />
   {:else}
-    <input {type} {id} {value} on:input />
+    <input
+      class:invalid={!valid && touched}
+      {type}
+      {id}
+      {value}
+      on:input
+      on:blur={() => (touched = true)}
+    />
+  {/if}
+  {#if validityMessage && !valid && touched}
+    <p class="error-message">{validityMessage}</p>
   {/if}
 </div>
 
@@ -47,6 +68,16 @@
   .form-control {
     padding: 0.5rem 0;
     width: 100%;
+    margin: 0.25rem 0;
+  }
+
+  .invalid {
+    border-color: red;
+    background: lightpink;
+  }
+
+  .error-message {
+    color: red;
     margin: 0.25rem 0;
   }
 </style>

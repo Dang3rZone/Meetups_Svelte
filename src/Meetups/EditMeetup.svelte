@@ -3,15 +3,29 @@
   import Button from "../UI/Button.svelte";
   import Modal from "../UI/Modal.svelte";
   import TextInput from "../UI/TextInput.svelte";
+  import { isEmpty, isValidEmail } from "../helpers/validation";
 
   let title = "";
+  let titleValid = false;
   let subtitle = "";
+  let subtitleValid = false;
   let address = "";
+  let addressValid = false;
   let email = "";
+  let emailValid = false;
   let description = "";
+  let descriptionValid = false;
   let imageUrl = "";
+  let imageUrlValid = false;
 
   const dispatch = createEventDispatcher();
+
+  $: titleValid = !isEmpty(title);
+  $: subtitleValid = !isEmpty(subtitle);
+  $: addressValid = !isEmpty(address);
+  $: descriptionValid = !isEmpty(description);
+  $: imageUrlValid = !isEmpty(imageUrl);
+  $: emailValid = isValidEmail(email);
 
   function submitForm() {
     dispatch("save", {
@@ -33,35 +47,41 @@
   <form on:submit|preventDefault={submitForm}>
     <TextInput
       id="title"
-      type="text"
       label="Title"
       value={title}
+      validityMessage="Please enter a valid title"
+      valid={titleValid}
       on:input={(e) => (title = e.target.value)}
     />
     <TextInput
       id="subtitle"
-      type="text"
       label="Subtitle"
+      validityMessage="Please enter a valid subtitle"
+      valid={subtitleValid}
       value={subtitle}
       on:input={(e) => (subtitle = e.target.value)}
     />
     <TextInput
       id="address"
-      type="text"
       label="Address"
+      valid={addressValid}
+      validityMessage="Please enter a valid address"
       value={address}
       on:input={(e) => (address = e.target.value)}
     />
     <TextInput
       id="imageUrl"
-      type="text"
       label="Image Url"
+      valid={imageUrlValid}
+      validityMessage="Please enter a valid url"
       value={imageUrl}
       on:input={(e) => (imageUrl = e.target.value)}
     />
     <TextInput
       id="email"
       label="Email"
+      valid={emailValid}
+      validityMessage="Please enter a valid email"
       value={email}
       type="email"
       on:input={(e) => (email = e.target.value)}
@@ -69,6 +89,8 @@
     <TextInput
       id="description"
       label="Description"
+      valid={descriptionValid}
+      validityMessage="Please enter a valid description"
       value={description}
       controlType="textarea"
       on:input={(e) => (description = e.target.value)}
