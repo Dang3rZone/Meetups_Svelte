@@ -1,9 +1,16 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import Badge from "../UI/Badge.svelte";
-  import Button from "../UI/Button.svelte";
+  import { createEventDispatcher } from 'svelte';
+  import Badge from '../UI/Badge.svelte';
+  import Button from '../UI/Button.svelte';
 
-  export let id, title, subtitle, imageUrl, description, email, address, isFav;
+  export let id;
+  export let title;
+  export let subtitle;
+  export let imageUrl;
+  export let description;
+  export let email;
+  export let address;
+  export let isFav;
 
   const dispatch = createEventDispatcher();
 </script>
@@ -30,10 +37,10 @@
     <Button mode="outline" type="button">More Details</Button>
     <Button
       mode="outline"
-      color={isFav ? null : "success"}
+      color={isFav ? null : 'success'}
       type="button"
-      on:click={() => dispatch("togglefavorite", id)}
-      >{isFav ? "Unfavorite" : "Favorite"}</Button
+      on:click={() => dispatch('togglefavorite', id)}
+      >{isFav ? 'Unfavorite' : 'Favorite'}</Button
     >
   </footer>
 </article>
@@ -66,7 +73,7 @@
   h1 {
     font-size: 1.25rem;
     margin: 0.5rem 0;
-    font-family: "Roboto Slab", sans-serif;
+    font-family: 'Roboto Slab', sans-serif;
   }
 
   h1.is-favorite {
