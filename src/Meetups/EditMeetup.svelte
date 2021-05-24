@@ -1,16 +1,17 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import Button from "../UI/Button.svelte";
-  import Modal from "../UI/Modal.svelte";
-  import TextInput from "../UI/TextInput.svelte";
-  import { isEmpty, isValidEmail } from "../helpers/validation";
+  import meetups from './meetups-store';
+  import { createEventDispatcher } from 'svelte';
+  import Button from '../UI/Button.svelte';
+  import Modal from '../UI/Modal.svelte';
+  import TextInput from '../UI/TextInput.svelte';
+  import { isEmpty, isValidEmail } from '../helpers/validation';
 
-  let title = "";
-  let subtitle = "";
-  let address = "";
-  let email = "";
-  let description = "";
-  let imageUrl = "";
+  let title = '';
+  let subtitle = '';
+  let address = '';
+  let email = '';
+  let description = '';
+  let imageUrl = '';
 
   const dispatch = createEventDispatcher();
 
@@ -29,18 +30,21 @@
     emailValid;
 
   function submitForm() {
-    dispatch("save", {
+    const meetupData = {
       title: title,
       subtitle: subtitle,
       description: description,
       imageUrl: imageUrl,
-      email: email,
       address: address,
-    });
+      contactEmail: email,
+    };
+
+    meetups.addMeetup(meetupData);
+    dispatch('save');
   }
 
   function cancel() {
-    dispatch("cancel");
+    dispatch('cancel');
   }
 </script>
 

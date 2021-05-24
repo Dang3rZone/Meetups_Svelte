@@ -8,25 +8,11 @@
   let editMode;
 
   function addMeetup(e) {
-    const meetupData = {
-      title: e.detail.title,
-      subtitle: e.detail.subtitle,
-      description: e.detail.description,
-      imageUrl: e.detail.imageUrl,
-      address: e.detail.address,
-      contactEmail: e.detail.email,
-    };
-    meetups.addMeetup(meetupData);
     editMode = null;
   }
 
   function cancelEdit() {
     editMode = null;
-  }
-
-  function toggleFavorite(e) {
-    const id = e.detail;
-    meetups.toggleFavorite(id);
   }
 </script>
 
@@ -38,7 +24,7 @@
   {#if editMode === 'add'}
     <EditMeetup on:save={addMeetup} on:cancel={cancelEdit} />
   {/if}
-  <MeetupGrid meetups={$meetups} on:togglefavorite={toggleFavorite} />
+  <MeetupGrid meetups={$meetups} />
 </main>
 
 <style>
