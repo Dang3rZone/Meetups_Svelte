@@ -1,9 +1,9 @@
 <script>
-  export let type = "button",
-    href = null,
-    mode = null,
-    color = null,
-    disabled = false;
+  export let type = 'button';
+  export let href = null;
+  export let mode = null;
+  export let color = null;
+  export let disabled = false;
 </script>
 
 {#if href}
