@@ -1,12 +1,12 @@
 <script>
-  export let controlType = null,
-    id,
-    label,
-    rows = null,
-    value,
-    type = null,
-    valid = true,
-    validityMessage = "";
+  export let controlType = null;
+  export let id;
+  export let label;
+  export let rows = null;
+  export let value;
+  export let type = null;
+  export let valid = true;
+  export let validityMessage = '';
 
   let touched = false;
 </script>
@@ -14,7 +14,7 @@
 <div class="form-control">
   <label for={id}>{label}</label>
 
-  {#if controlType === "textarea"}
+  {#if controlType === 'textarea'}
     <!-- Use on: without handler to pass it to the parent -->
     <textarea
       class:invalid={!valid && touched}
