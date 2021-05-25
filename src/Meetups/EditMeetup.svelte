@@ -53,14 +53,13 @@
       address: address,
       contactEmail: email,
     };
-
     // meetups.push(newMeetip) => DO NOT DO THIS
     if (id) {
       meetups.updateMeetup(id, meetupData);
     } else {
       meetups.addMeetup(meetupData);
-      dispatch('save');
     }
+    dispatch('save');
   }
 
   function cancel() {

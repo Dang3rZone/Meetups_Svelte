@@ -27,6 +27,7 @@ const meetups = writable([
 
 const customMeetupsStore = {
   subscribe: meetups.subscribe,
+
   addMeetup: (meetupData) => {
     const newMeetup = {
       ...meetupData,
@@ -37,6 +38,18 @@ const customMeetupsStore = {
       return [newMeetup, ...items];
     });
   },
+
+  updateMeetup: (id, meetupData) => {
+    meetups.update((items) => {
+      const meetupIndex = items.findIndex((i) => i.id === id);
+      const updatedMeetup = { ...items[meetupIndex], ...meetupData };
+      const updatedMeetups = [...items];
+      updatedMeetups[meetupIndex] = updatedMeetup;
+      console.log(updatedMeetups, id);
+      return updatedMeetups;
+    });
+  },
+
   toggleFavorite: (id) => {
     meetups.update((items) => {
       // Copy the meetup before update
