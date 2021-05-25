@@ -10,8 +10,12 @@
     "test:watch": "npm run test -- --watch"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@testing-library/svelte": "^3.0.3",
+    "babel-jest": "^27.0.1",
     "jest": "^27.0.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
