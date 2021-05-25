@@ -6,12 +6,27 @@
   import TextInput from '../UI/TextInput.svelte';
   import { isEmpty, isValidEmail } from '../helpers/validation';
 
+  export let id = null;
   let title = '';
   let subtitle = '';
   let address = '';
   let email = '';
   let description = '';
   let imageUrl = '';
+
+  if (id) {
+    const unsubscribe = meetups.subscribe((items) => {
+      const selectedMeetup = items.find((i) => i.id === id);
+      title = selectedMeetup.title;
+      subtitle = selectedMeetup.subtitle;
+      address = selectedMeetup.address;
+      email = selectedMeetup.contactEmail;
+      description = selectedMeetup.description;
+      imageUrl = selectedMeetup.imageUrl;
+    });
+
+    unsubscribe();
+  }
 
   const dispatch = createEventDispatcher();
 
@@ -39,8 +54,13 @@
       contactEmail: email,
     };
 
-    meetups.addMeetup(meetupData);
-    dispatch('save');
+    // meetups.push(newMeetip) => DO NOT DO THIS
+    if (id) {
+      meetups.updateMeetup(id, meetupData);
+    } else {
+      meetups.addMeetup(meetupData);
+      dispatch('save');
+    }
   }
 
   function cancel() {
@@ -101,10 +121,8 @@
     />
   </form>
   <div slot="footer">
-    <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
-    <Button type="button" on:click={submitForm} disabled={!formIsValid}
-      >Save</Button
-    >
+    <Button mode="outline" on:click={cancel}>Cancel</Button>
+    <Button on:click={submitForm} disabled={!formIsValid}>Save</Button>
   </div>
 </Modal>
 
