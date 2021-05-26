@@ -7,7 +7,9 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "test": "jest src",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "test:unit": "jest \\.unit\\. --coverage",
+    "test:int": "jest \\.int\\. --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
