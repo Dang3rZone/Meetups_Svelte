@@ -6,7 +6,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "test": "jest src",
+    "test": "jest ./src",
     "test:watch": "npm run test -- --watch",
     "test coverage": "jest --coverage",
     "test:int": "jest \\.int\\. --coverage"
@@ -16,6 +16,7 @@
     "@babel/preset-env": "^7.14.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/svelte": "^3.0.3",
     "babel-jest": "^27.0.1",
     "jest": "^27.0.1",
@@ -35,11 +36,11 @@
     "moduleFileExtensions": [
       "js",
       "svelte"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
     ]
   },
-  "setupFilesAfterEnv": [
-    "@testing-library/jest-dom/extend-expect"
-  ],
   "dependencies": {
     "sirv-cli": "^1.0.0"
   }
