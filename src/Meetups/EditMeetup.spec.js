@@ -17,10 +17,10 @@ const formData = {
 describe('form validation', () => {
   it.only('all inputs are required, save btn is disabled', async () => {
     render(EditMeetup);
-    const saveBtn = document.querySelector("button[aria-label='SAVE']");
-    // btn is disabled by default
+    const saveBtn = document.querySelectorAll("div>button")[1];
 
+    // btn is disabled by default
     expect(saveBtn).toBeDisabled();
-    expect(saveBtn).toHaveAttribute('disabled');
+    // expect(saveBtn).toHaveAttribute('disabled');
   });
 });

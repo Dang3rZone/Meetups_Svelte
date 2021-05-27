@@ -121,7 +121,7 @@
   </form>
   <div slot="footer">
     <Button mode="outline" on:click={cancel}>Cancel</Button>
-    <Button on:click={submitForm} disabled={!formIsValid}>Save</Button>
+    <Button on:click={submitForm} disabled={!formIsValid} >Save</Button>
   </div>
 </Modal>
 

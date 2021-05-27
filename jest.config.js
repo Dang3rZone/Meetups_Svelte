@@ -4,4 +4,5 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
   },
   moduleFileExtensions: ['js', 'svelte'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.js']
 };
