@@ -22,6 +22,21 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
+function renderEditMeetup() {
+  const utils = render(EditMeetup);
+  utils.getAllByText(/title/i).value = formData.title;
+  utils.getByLabelText(/email/i).value = formData.email;
+  utils.getByLabelText(/address/i).value = formData.address;
+  utils.getByLabelText(/description/i).value = formData.description;
+  utils.getByLabelText(/imageUrl/i).value = formData.imageUrl;
+
+  const submitButton = utils.getByText(/save/i);
+  return {
+    ...utils,
+    submitButton,
+  };
+}
+
 describe('props are passing properly', () => {
   it.only('type of button', async () => {
     render(EditMeetup);
@@ -109,5 +124,29 @@ describe('form validation', () => {
     getByLabelText(/email/i);
     getByLabelText(/address/i);
     getByText(/save/i);
+  });
+});
+
+describe('error handling when dealing with API', () => {
+  it.skip('error shows', async () => {
+    const testError = 'test error';
+
+    mockAddMeetup.mockRejectedValueOnce({ data: { error: testError } });
+    const { getByLabelText, getByText, getAllByText, findByRole } =
+      render(EditMeetup);
+
+    getAllByText(/title/i).value = formData.title;
+    getByLabelText(/email/i).value = formData.email;
+    getByLabelText(/address/i).value = formData.address;
+    getByLabelText(/description/i).value = formData.description;
+    getByLabelText(/imageUrl/i).value = formData.imageUrl;
+
+    const submitButton = getByText(/save/i);
+
+    fireEvent.click(submitButton);
+
+    const postError = await findByRole('alert');
+    expect(postError).toHaveTextContent(testError);
+    expect(submitButton).not.toBeDisabled();
   });
 });
