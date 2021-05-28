@@ -4,14 +4,14 @@
 // import { axe } from 'jest-axe';
 import { render, fireEvent } from '@testing-library/svelte';
 import EditMeetup from './EditMeetup.svelte';
-import { addMeetup as mockAddMeetup } from './meetups-store';
+import meetups from './meetups-store';
 
 const formData = {
-  id: null,
+  //   id: null,
   title: 'Test title',
-  subtitle: '',
+  subtitle: 'Test subtitle',
   address: 'Test address',
-  email: 'Test email',
+  contactEmail: 'Test email',
   description: 'Test description',
   imageUrl: 'Test imageUrl',
 };
@@ -70,13 +70,14 @@ describe('form validation', () => {
 
   // TODO: work in progress
   it.only('button enabled', () => {
-    mockAddMeetup.mockResolvedValue();
+    meetups.addMeetup.mockResolvedValue();
     const { getByLabelText, getByText, getAllByText } = render(EditMeetup);
     getAllByText(/title/i).value = formData.title;
-    getByLabelText(/email/i).value = formData.email;
+    getAllByText(/subtitle/i).value = formData.subtitle;
+    getByLabelText(/email/i).value = formData.contactEmail;
     getByLabelText(/address/i).value = formData.address;
     getByLabelText(/description/i).value = formData.description;
-    getByLabelText(/imageUrl/i).value = formData.imageUrl;
+    getByLabelText(/image Url/i).value = formData.imageUrl;
 
     const submitButton = getByText(/save/i);
 
@@ -84,10 +85,10 @@ describe('form validation', () => {
 
     expect(submitButton).toBeDisabled();
 
-    expect(mockAddMeetup).toHaveBeenCalledWith({
+    expect(meetups.addMeetup).toHaveBeenCalledWith({
       ...formData,
     });
-    expect(mockAddMeetup).toHaveBeenCalledTimes(1);
+    expect(meetups.addMeetup).toHaveBeenCalledTimes(1);
   });
   //   it.only('button enabled', async () => {
   //     render(EditMeetup);
@@ -131,12 +132,12 @@ describe('error handling when dealing with API', () => {
   it.skip('error shows', async () => {
     const testError = 'test error';
 
-    mockAddMeetup.mockRejectedValueOnce({ data: { error: testError } });
+    meetups.addMeetup.mockRejectedValueOnce({ data: { error: testError } });
     const { getByLabelText, getByText, getAllByText, findByRole } =
       render(EditMeetup);
 
     getAllByText(/title/i).value = formData.title;
-    getByLabelText(/email/i).value = formData.email;
+    getByLabelText(/email/i).value = formData.contactEmail;
     getByLabelText(/address/i).value = formData.address;
     getByLabelText(/description/i).value = formData.description;
     getByLabelText(/imageUrl/i).value = formData.imageUrl;
