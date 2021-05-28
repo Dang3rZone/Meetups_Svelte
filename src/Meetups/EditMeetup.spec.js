@@ -3,6 +3,7 @@
  */
 // import { axe } from 'jest-axe';
 import { render, fireEvent } from '@testing-library/svelte';
+import { tick } from 'svelte';
 import EditMeetup from './EditMeetup.svelte';
 import meetups from './meetups-store';
 
@@ -69,7 +70,7 @@ describe('form validation', () => {
   });
 
   // TODO: work in progress
-  it.only('button enabled', () => {
+  /*  it.only('button enabled', () => {
     meetups.addMeetup.mockResolvedValue();
     const { getByLabelText, getByText, getAllByText } = render(EditMeetup);
     getAllByText(/title/i).value = formData.title;
@@ -89,14 +90,44 @@ describe('form validation', () => {
       ...formData,
     });
     expect(meetups.addMeetup).toHaveBeenCalledTimes(1);
+  }); */
+
+  it.only('button enabled', async () => {
+    meetups.addMeetup.mockResolvedValue();
+    const { getByLabelText, getByText, getAllByText } = render(EditMeetup);
+    const title = document.querySelector('#title');
+    const subtitle = document.querySelector('#subtitle');
+    const email = getByLabelText(/email/i);
+    const address = getByLabelText(/address/i);
+    const description = getByLabelText(/description/i);
+    const imageUrl = getByLabelText(/image Url/i);
+
+    const submitButton = getByText(/save/i);
+
+    fireEvent.click(submitButton);
+
+    expect(submitButton).toBeDisabled();
+
+    // set a message
+
+    title.value = 'this would work?';
+    subtitle.value = 'this would work?';
+    email.value = 'tato@tatotesting.com';
+    address.value = 'this would work?';
+    description.value = 'this would work?';
+    imageUrl.value = 'this would work?';
+
+    await fireEvent.input(title);
+    await fireEvent.input(subtitle);
+    await fireEvent.input(email);
+    await fireEvent.input(address);
+    await fireEvent.input(description);
+    await fireEvent.input(imageUrl);
+    tick();
+
+    // submit button is enabled
+    expect(submitButton).toBeEnabled();
   });
-  //   it.only('button enabled', async () => {
-  //     render(EditMeetup);
-  //     let formIsValid = true;
-  //     const saveBtn = document.querySelectorAll('div>button')[1];
-  //     // button enabled
-  //     expect(saveBtn).toBeEnabled();
-  //   });
 
   it.only('input are empty', () => {
     render(EditMeetup);
